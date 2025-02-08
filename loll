@@ -36,7 +36,7 @@ Frame.Parent = ScreenGui
 Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 Frame.Position = UDim2.new(0.5, -100, 0.5, -100)
 Frame.Size = UDim2.new(0, 200, 0, 200)
-Frame.Visible = false -- Initially hidden
+Frame.Visible = true -- Initially visible for key input
 
 -- Configure the ToggleButton
 ToggleButton.Parent = Frame
@@ -48,10 +48,10 @@ ToggleButton.Text = "Toggle UI"
 ToggleButton.Draggable = true
 
 -- Configure the KeyInputBox
-KeyInputBox.Parent = ScreenGui
+KeyInputBox.Parent = Frame
 KeyInputBox.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 KeyInputBox.TextColor3 = Color3.fromRGB(255, 255, 255)
-KeyInputBox.Position = UDim2.new(0.5, -75, 0.35, -25)
+KeyInputBox.Position = UDim2.new(0.5, -75, 0.2, -25)
 KeyInputBox.Size = UDim2.new(0, 150, 0, 50)
 KeyInputBox.PlaceholderText = "Enter Key"
 KeyInputBox.Text = "" -- Clear any default text
@@ -73,10 +73,10 @@ KeyInputBoxLabel.TextScaled = true
 KeyInputBoxLabel.BorderSizePixel = 0
 
 -- Configure the ConfirmButton
-ConfirmButton.Parent = ScreenGui
+ConfirmButton.Parent = Frame
 ConfirmButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 ConfirmButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-ConfirmButton.Position = UDim2.new(0.5, -50, 0.55, -25)
+ConfirmButton.Position = UDim2.new(0.5, -50, 0.4, -25)
 ConfirmButton.Size = UDim2.new(0, 100, 0, 50)
 ConfirmButton.Text = "Confirm"
 
@@ -92,6 +92,7 @@ ESPButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 ESPButton.Position = UDim2.new(0.5, -50, 0.7, -25)
 ESPButton.Size = UDim2.new(0, 100, 0, 50)
 ESPButton.Text = "Enable ESP"
+ESPButton.Visible = false -- Initially hidden, will be shown after access is granted
 
 -- Add border to ESPButton
 local ESPButtonBorder = Instance.new("UICorner")
@@ -132,6 +133,9 @@ ToggleButton.MouseButton1Click:Connect(toggleUI)
 ESPButton.MouseButton1Click:Connect(toggleESP)
 ConfirmButton.MouseButton1Click:Connect(function()
     checkKey(KeyInputBox.Text)
+    if hasAccess then
+        ESPButton.Visible = true -- Show ESP button after access is granted
+    end
 end)
 
 -- ESP Feature
