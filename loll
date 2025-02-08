@@ -21,7 +21,6 @@ end
 
 -- Create UI elements
 local ScreenGui = Instance.new("ScreenGui")
-local KeyFrame = Instance.new("Frame")
 local MainFrame = Instance.new("Frame")
 local ToggleButton = Instance.new("TextButton")
 local KeyInputBox = Instance.new("TextBox")
@@ -31,13 +30,6 @@ local ESPButton = Instance.new("TextButton")
 -- Configure the ScreenGui
 ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 ScreenGui.ResetOnSpawn = false
-
--- Configure the KeyFrame (for key input)
-KeyFrame.Parent = ScreenGui
-KeyFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-KeyFrame.Position = UDim2.new(0.5, -100, 0.5, -50)
-KeyFrame.Size = UDim2.new(0, 200, 0, 100)
-KeyFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 
 -- Configure the MainFrame (main UI)
 MainFrame.Parent = ScreenGui
@@ -57,7 +49,7 @@ ToggleButton.Text = "Toggle UI"
 ToggleButton.Draggable = true
 
 -- Configure the KeyInputBox
-KeyInputBox.Parent = KeyFrame
+KeyInputBox.Parent = MainFrame
 KeyInputBox.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 KeyInputBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 KeyInputBox.Position = UDim2.new(0.5, -75, 0.2, -25)
@@ -82,10 +74,10 @@ KeyInputBoxLabel.TextScaled = true
 KeyInputBoxLabel.BorderSizePixel = 0
 
 -- Configure the ConfirmButton
-ConfirmButton.Parent = KeyFrame
+ConfirmButton.Parent = MainFrame
 ConfirmButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 ConfirmButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-ConfirmButton.Position = UDim2.new(0.5, -50, 0.6, -25)
+ConfirmButton.Position = UDim2.new(0.5, -50, 0.4, -25)
 ConfirmButton.Size = UDim2.new(0, 100, 0, 50)
 ConfirmButton.Text = "Confirm"
 
@@ -101,6 +93,7 @@ ESPButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 ESPButton.Position = UDim2.new(0.5, -50, 0.7, -25)
 ESPButton.Size = UDim2.new(0, 100, 0, 50)
 ESPButton.Text = "Enable ESP"
+ESPButton.Visible = false -- Initially hidden, will be shown after access is granted
 
 -- Add border to ESPButton
 local ESPButtonBorder = Instance.new("UICorner")
@@ -142,8 +135,9 @@ ESPButton.MouseButton1Click:Connect(toggleESP)
 ConfirmButton.MouseButton1Click:Connect(function()
     checkKey(KeyInputBox.Text)
     if hasAccess then
-        KeyFrame.Visible = false
-        MainFrame.Visible = true -- Show Main UI after access is granted
+        KeyInputBox.Visible = false
+        ConfirmButton.Visible = false
+        ESPButton.Visible = true -- Show ESP button after access is granted
     end
 end)
 
