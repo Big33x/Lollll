@@ -4,7 +4,7 @@ local UIS = game:GetService("UserInputService")
 
 -- Key System
 local accessKey = "TEST123" -- Change this to your desired key
-local hasAccess = false
+local hasAccess = true
 
 -- Function to check the key
 local function checkKey(inputKey)
