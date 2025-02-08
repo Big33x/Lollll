@@ -2,8 +2,27 @@
 local TweenService = game:GetService("TweenService")
 local UIS = game:GetService("UserInputService")
 
+-- Key System
+local accessKey = "TEST123" -- Change this to your desired key
+local hasAccess = false
+
+-- Function to check the key
+local function checkKey(inputKey)
+    if inputKey == accessKey then
+        hasAccess = true
+        print("Access Granted")
+        KeyFrame.Visible = true
+        showMainFrame()
+    else
+        print("Access Denied")
+    end
+end
+
 -- Create UI elements
 local ScreenGui = Instance.new("ScreenGui")
+local KeyFrame = Instance.new("Frame")
+local KeyInputBox = Instance.new("TextBox")
+local ConfirmButton = Instance.new("TextButton")
 local MainFrame = Instance.new("Frame")
 local HeaderLabel = Instance.new("TextLabel")
 local ESPButton = Instance.new("TextButton")
@@ -12,17 +31,60 @@ local ESPButton = Instance.new("TextButton")
 ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 ScreenGui.ResetOnSpawn = false
 
+-- Configure the KeyFrame (for key input)
+KeyFrame.Parent = ScreenGui
+KeyFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+KeyFrame.Position = UDim2.new(0.5, -100, 0.5, -50)
+KeyFrame.Size = UDim2.new(0, 200, 0, 150)
+KeyFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+KeyFrame.Visible = true
+
+-- Add a UICorner for rounded corners to KeyFrame
+local KeyFrameCorner = Instance.new("UICorner")
+KeyFrameCorner.CornerRadius = UDim.new(0, 10)
+KeyFrameCorner.Parent = KeyFrame
+
+-- Configure the KeyInputBox
+KeyInputBox.Parent = KeyFrame
+KeyInputBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+KeyInputBox.TextColor3 = Color3.fromRGB(0, 0, 0)
+KeyInputBox.Position = UDim2.new(0.5, -75, 0.25, -25)
+KeyInputBox.Size = UDim2.new(0, 150, 0, 30)
+KeyInputBox.PlaceholderText = "Enter Key"
+KeyInputBox.Text = "" -- Clear any default text
+KeyInputBox.AnchorPoint = Vector2.new(0.5, 0.5)
+
+-- Add rounded corners to KeyInputBox
+local KeyInputBoxCorner = Instance.new("UICorner")
+KeyInputBoxCorner.CornerRadius = UDim.new(0, 10)
+KeyInputBoxCorner.Parent = KeyInputBox
+
+-- Configure the ConfirmButton
+ConfirmButton.Parent = KeyFrame
+ConfirmButton.BackgroundColor3 = Color3.fromRGB(0, 0, 255) -- Blue background
+ConfirmButton.TextColor3 = Color3.fromRGB(255, 255, 255) -- White text
+ConfirmButton.Position = UDim2.new(0.5, -50, 0.75, -25)
+ConfirmButton.Size = UDim2.new(0, 100, 0, 30)
+ConfirmButton.Text = "Check Key"
+ConfirmButton.TextScaled = true
+ConfirmButton.AnchorPoint = Vector2.new(0.5, 0.5)
+
+-- Add rounded corners to ConfirmButton
+local ConfirmButtonCorner = Instance.new("UICorner")
+ConfirmButtonCorner.CornerRadius = UDim.new(0, 10)
+ConfirmButtonCorner.Parent = ConfirmButton
+
 -- Configure the MainFrame (main UI)
 MainFrame.Parent = ScreenGui
 MainFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 255) -- Blue background
 MainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
 MainFrame.Size = UDim2.new(0, 300, 0, 300)
 MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
-MainFrame.Visible = true -- Initially visible
+MainFrame.Visible = false -- Initially hidden
 MainFrame.Active = true
 MainFrame.Draggable = true
 
--- Add a UICorner for rounded corners
+-- Add a UICorner for rounded corners to MainFrame
 local MainFrameCorner = Instance.new("UICorner")
 MainFrameCorner.CornerRadius = UDim.new(0, 10)
 MainFrameCorner.Parent = MainFrame
@@ -31,7 +93,7 @@ MainFrameCorner.Parent = MainFrame
 HeaderLabel.Parent = MainFrame
 HeaderLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
 HeaderLabel.TextColor3 = Color3.fromRGB(255, 255, 255) -- White text
-HeaderLabel.Position = UDim2.new(0.25, -75, 0.2, -25) -- Moved to the left
+HeaderLabel.Position = UDim2.new(0.5, -75, 0.2, -25)
 HeaderLabel.Size = UDim2.new(0, 150, 0, 50)
 HeaderLabel.Text = "FOG"
 HeaderLabel.TextScaled = true
@@ -41,7 +103,7 @@ HeaderLabel.AnchorPoint = Vector2.new(0.5, 0.5)
 ESPButton.Parent = MainFrame
 ESPButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255) -- White background
 ESPButton.TextColor3 = Color3.fromRGB(0, 0, 255) -- Blue text
-ESPButton.Position = UDim2.new(0.25, -75, 0.6, -25) -- Moved to the left
+ESPButton.Position = UDim2.new(0.5, -75, 0.6, -25)
 ESPButton.Size = UDim2.new(0, 150, 0, 50)
 ESPButton.Text = "Enable ESP"
 ESPButton.TextScaled = true
@@ -52,9 +114,23 @@ local ESPButtonCorner = Instance.new("UICorner")
 ESPButtonCorner.CornerRadius = UDim.new(0, 10)
 ESPButtonCorner.Parent = ESPButton
 
+-- Function to show the MainFrame with animation
+local function showMainFrame()
+    MainFrame.Position = UDim2.new(0.5, 0, 1, 0)
+    MainFrame.Visible = true
+    TweenService:Create(MainFrame, TweenInfo.new(0.5, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {Position = UDim2.new(0.5, 0, 0.5, 0)}):Play()
+end
+
+-- Add functionality to the ConfirmButton
+ConfirmButton.MouseButton1Click:Connect(function()
+    checkKey(KeyInputBox.Text)
+end)
+
 -- Optimize for mobile support
 if UIS.TouchEnabled then
     MainFrame.Size = UDim2.new(0, 300, 0, 300) -- Increase size for mobile
+    HeaderLabel.Size = UDim2.new(0, 200, 0, 50) -- Increase size for mobile
+    ESPButton.Size = UDim2.new(0, 200, 0, 50) -- Increase size for mobile
 end
 
 -- ESP feature toggle
