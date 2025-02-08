@@ -5,7 +5,6 @@ local UIS = game:GetService("UserInputService")
 -- Create UI elements
 local ScreenGui = Instance.new("ScreenGui")
 local MainFrame = Instance.new("Frame")
-local ToggleButton = Instance.new("TextButton")
 local HeaderLabel = Instance.new("TextLabel")
 local ESPButton = Instance.new("TextButton")
 
@@ -19,7 +18,7 @@ MainFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 255) -- Blue background
 MainFrame.Position = UDim2.new(0.5, -100, 0.5, -100)
 MainFrame.Size = UDim2.new(0, 200, 0, 200)
 MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
-MainFrame.Visible = false -- Initially hidden
+MainFrame.Visible = true -- Initially visible
 MainFrame.Active = true
 MainFrame.Draggable = true
 
@@ -51,32 +50,11 @@ local ESPButtonCorner = Instance.new("UICorner")
 ESPButtonCorner.CornerRadius = UDim.new(0, 10)
 ESPButtonCorner.Parent = ESPButton
 
--- Configure the ToggleButton
-ToggleButton.Parent = ScreenGui
-ToggleButton.BackgroundColor3 = Color3.fromRGB(0, 0, 255) -- Blue background
-ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255) -- White text
-ToggleButton.Position = UDim2.new(0, 10, 0.5, -25) -- Side of the screen
-ToggleButton.Size = UDim2.new(0, 50, 0, 50)
-ToggleButton.Text = "Toggle UI"
-ToggleButton.TextScaled = true
-
--- Add a UICorner for rounded corners to ToggleButton
-local ToggleButtonCorner = Instance.new("UICorner")
-ToggleButtonCorner.CornerRadius = UDim.new(0, 10)
-ToggleButtonCorner.Parent = ToggleButton
-
--- Toggle UI visibility
-local function toggleUI()
-    MainFrame.Visible = not MainFrame.Visible
-end
-
--- Add functionality to the toggle button
-ToggleButton.MouseButton1Click:Connect(toggleUI)
-
 -- Optimize for mobile support
 if UIS.TouchEnabled then
-    ToggleButton.Size = UDim2.new(0, 60, 0, 60) -- Increase size for mobile
-    ESPButton.Size = UDim2.new(0, 150, 0, 50) -- Increase size for mobile
+    MainFrame.Size = UDim2.new(0, 300, 0, 300) -- Increase size for mobile
+    HeaderLabel.Size = UDim2.new(0, 200, 0, 50) -- Increase size for mobile
+    ESPButton.Size = UDim2.new(0, 200, 0, 50) -- Increase size for mobile
 end
 
 -- ESP feature toggle
