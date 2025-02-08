@@ -1,0 +1,105 @@
+-- Optimization settings
+local TweenService = game:GetService("TweenService")
+local UIS = game:GetService("UserInputService")
+
+-- Key System
+local accessKey = "TEST123" -- Change this to your desired key
+local hasAccess = false
+
+-- Function to check the key
+local function checkKey(inputKey)
+    if inputKey == accessKey then
+        hasAccess = true
+        print("Access Granted")
+    else
+        print("Access Denied")
+    end
+end
+
+-- Create UI elements
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local ToggleButton = Instance.new("TextButton")
+local KeyInputBox = Instance.new("TextBox")
+local ESPToggleButton = Instance.new("TextButton")
+
+-- Configure the ScreenGui
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.ResetOnSpawn = false
+
+-- Configure the Frame (main UI)
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Frame.Position = UDim2.new(0.5, -100, 0.5, -100)
+Frame.Size = UDim2.new(0, 200, 0, 200)
+Frame.Visible = false -- Initially hidden
+
+-- Configure the ToggleButton
+ToggleButton.Parent = ScreenGui
+ToggleButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleButton.Position = UDim2.new(0, 0, 0.5, -25)
+ToggleButton.Size = UDim2.new(0, 100, 0, 50)
+ToggleButton.Text = "Toggle UI"
+ToggleButton.Draggable = true
+
+-- Configure the KeyInputBox
+KeyInputBox.Parent = Frame
+KeyInputBox.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
+KeyInputBox.Position = UDim2.new(0.5, -75, 0.5, -25)
+KeyInputBox.Size = UDim2.new(0, 150, 0, 50)
+KeyInputBox.PlaceholderText = "Enter Key"
+
+-- Configure the ESPToggleButton
+ESPToggleButton.Parent = Frame
+ESPToggleButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+ESPToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+ESPToggleButton.Position = UDim2.new(0.5, -75, 0.7, -25)
+ESPToggleButton.Size = UDim2.new(0, 150, 0, 50)
+ESPToggleButton.Text = "Toggle ESP"
+
+-- Toggle UI visibility
+local function toggleUI()
+    if Frame.Visible then
+        Frame.Visible = false
+    else
+        Frame.Visible = true
+    end
+end
+
+-- Toggle ESP feature
+local espEnabled = false
+
+local function toggleESP()
+    espEnabled = not espEnabled
+    if espEnabled then
+        print("ESP Enabled")
+        -- Add your ESP code here
+    else
+        print("ESP Disabled")
+        -- Add your code to disable ESP here
+    end
+end
+
+-- Add functionality to the buttons
+ToggleButton.MouseButton1Click:Connect(toggleUI)
+ESPToggleButton.MouseButton1Click:Connect(toggleESP)
+KeyInputBox.FocusLost:Connect(function(enterPressed)
+    if enterPressed then
+        checkKey(KeyInputBox.Text)
+    end
+end)
+
+-- ESP Feature
+local LocalPlayer = cloneref(game:GetService("Players").LocalPlayer)
+local Workspace = cloneref(game:GetService("Workspace"))
+local Camera = Workspace.CurrentCamera
+local WorldToViewportPoint = Camera.WorldToViewportPoint
+local RunService = cloneref(game:GetService("RunService"))
+
+local function updateESP()
+    if not espEnabled then return end
+    -- Add your ESP update code here
+end
+
+RunService.RenderStepped:Connect(updateESP)
