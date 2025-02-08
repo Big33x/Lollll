@@ -51,15 +51,16 @@ ToggleButton.Draggable = true
 KeyInputBox.Parent = ScreenGui
 KeyInputBox.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
 KeyInputBox.TextColor3 = Color3.fromRGB(255, 255, 255)
-KeyInputBox.Position = UDim2.new(0.5, -75, 0.4, -25)
+KeyInputBox.Position = UDim2.new(0.5, -75, 0.45, -25)
 KeyInputBox.Size = UDim2.new(0, 150, 0, 50)
 KeyInputBox.PlaceholderText = "Enter Key"
+KeyInputBox.Text = "" -- Clear any default text
 
 -- Configure the ConfirmButton
 ConfirmButton.Parent = ScreenGui
 ConfirmButton.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
 ConfirmButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-ConfirmButton.Position = UDim2.new(0.5, -50, 0.6, -25)
+ConfirmButton.Position = UDim2.new(0.5, -50, 0.55, -25)
 ConfirmButton.Size = UDim2.new(0, 100, 0, 50)
 ConfirmButton.Text = "Confirm"
 
