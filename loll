@@ -7,6 +7,7 @@ local ScreenGui = Instance.new("ScreenGui")
 local MainFrame = Instance.new("Frame")
 local ToggleButton = Instance.new("TextButton")
 local HeaderLabel = Instance.new("TextLabel")
+local ESPButton = Instance.new("TextButton")
 
 -- Configure the ScreenGui
 ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
@@ -21,6 +22,11 @@ MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 MainFrame.Visible = true -- Initially visible
 MainFrame.Active = true
 MainFrame.Draggable = true
+
+-- Add a UICorner for rounded corners
+local MainFrameCorner = Instance.new("UICorner")
+MainFrameCorner.CornerRadius = UDim.new(0, 10)
+MainFrameCorner.Parent = MainFrame
 
 -- Configure the HeaderLabel
 HeaderLabel.Parent = MainFrame
@@ -40,6 +46,25 @@ ToggleButton.Size = UDim2.new(0, 100, 0, 50)
 ToggleButton.Text = "Toggle UI"
 ToggleButton.TextScaled = true
 
+-- Add a UICorner for rounded corners to ToggleButton
+local ToggleButtonCorner = Instance.new("UICorner")
+ToggleButtonCorner.CornerRadius = UDim.new(0, 10)
+ToggleButtonCorner.Parent = ToggleButton
+
+-- Configure the ESPButton
+ESPButton.Parent = MainFrame
+ESPButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255) -- White background
+ESPButton.TextColor3 = Color3.fromRGB(0, 0, 255) -- Blue text
+ESPButton.Position = UDim2.new(0.5, -50, 0.55, -25) 
+ESPButton.Size = UDim2.new(0, 100, 0, 50)
+ESPButton.Text = "Enable ESP"
+ESPButton.TextScaled = true
+
+-- Add a UICorner for rounded corners to ESPButton
+local ESPButtonCorner = Instance.new("UICorner")
+ESPButtonCorner.CornerRadius = UDim.new(0, 10)
+ESPButtonCorner.Parent = ESPButton
+
 -- Toggle UI visibility
 local function toggleUI()
     MainFrame.Visible = not MainFrame.Visible
@@ -52,6 +77,26 @@ ToggleButton.MouseButton1Click:Connect(toggleUI)
 if UIS.TouchEnabled then
     ToggleButton.Size = UDim2.new(0, 150, 0, 50) -- Increase size for mobile
     HeaderLabel.Size = UDim2.new(0, 150, 0, 50) -- Increase size for mobile
+    ESPButton.Size = UDim2.new(0, 150, 0, 50) -- Increase size for mobile
 end
+
+-- ESP feature toggle
+local espEnabled = false
+
+local function toggleESP()
+    espEnabled = not espEnabled
+    if espEnabled then
+        ESPButton.Text = "Disable ESP"
+        print("ESP Enabled")
+        -- Add your ESP code here
+    else
+        ESPButton.Text = "Enable ESP"
+        print("ESP Disabled")
+        -- Add your code to disable ESP here
+    end
+end
+
+-- Add functionality to the ESP button
+ESPButton.MouseButton1Click:Connect(toggleESP)
 
 return ScreenGui
