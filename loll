@@ -19,7 +19,7 @@ MainFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 255) -- Blue background
 MainFrame.Position = UDim2.new(0.5, -100, 0.5, -100)
 MainFrame.Size = UDim2.new(0, 200, 0, 200)
 MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
-MainFrame.Visible = true -- Initially visible
+MainFrame.Visible = false -- Initially hidden
 MainFrame.Active = true
 MainFrame.Draggable = true
 
@@ -37,20 +37,6 @@ HeaderLabel.Size = UDim2.new(0, 100, 0, 50)
 HeaderLabel.Text = "FOG"
 HeaderLabel.TextScaled = true
 
--- Configure the ToggleButton
-ToggleButton.Parent = MainFrame
-ToggleButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255) -- White background
-ToggleButton.TextColor3 = Color3.fromRGB(0, 0, 255) -- Blue text
-ToggleButton.Position = UDim2.new(0.5, -50, 0.8, -25) 
-ToggleButton.Size = UDim2.new(0, 100, 0, 50)
-ToggleButton.Text = "Toggle UI"
-ToggleButton.TextScaled = true
-
--- Add a UICorner for rounded corners to ToggleButton
-local ToggleButtonCorner = Instance.new("UICorner")
-ToggleButtonCorner.CornerRadius = UDim.new(0, 10)
-ToggleButtonCorner.Parent = ToggleButton
-
 -- Configure the ESPButton
 ESPButton.Parent = MainFrame
 ESPButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255) -- White background
@@ -65,6 +51,20 @@ local ESPButtonCorner = Instance.new("UICorner")
 ESPButtonCorner.CornerRadius = UDim.new(0, 10)
 ESPButtonCorner.Parent = ESPButton
 
+-- Configure the ToggleButton
+ToggleButton.Parent = ScreenGui
+ToggleButton.BackgroundColor3 = Color3.fromRGB(0, 0, 255) -- Blue background
+ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255) -- White text
+ToggleButton.Position = UDim2.new(0, 10, 0.5, -25) -- Side of the screen
+ToggleButton.Size = UDim2.new(0, 50, 0, 50)
+ToggleButton.Text = "Toggle UI"
+ToggleButton.TextScaled = true
+
+-- Add a UICorner for rounded corners to ToggleButton
+local ToggleButtonCorner = Instance.new("UICorner")
+ToggleButtonCorner.CornerRadius = UDim.new(0, 10)
+ToggleButtonCorner.Parent = ToggleButton
+
 -- Toggle UI visibility
 local function toggleUI()
     MainFrame.Visible = not MainFrame.Visible
@@ -75,8 +75,7 @@ ToggleButton.MouseButton1Click:Connect(toggleUI)
 
 -- Optimize for mobile support
 if UIS.TouchEnabled then
-    ToggleButton.Size = UDim2.new(0, 150, 0, 50) -- Increase size for mobile
-    HeaderLabel.Size = UDim2.new(0, 150, 0, 50) -- Increase size for mobile
+    ToggleButton.Size = UDim2.new(0, 60, 0, 60) -- Increase size for mobile
     ESPButton.Size = UDim2.new(0, 150, 0, 50) -- Increase size for mobile
 end
 
