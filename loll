@@ -23,6 +23,7 @@ local ScreenGui = Instance.new("ScreenGui")
 local KeyFrame = Instance.new("Frame")
 local KeyInputBox = Instance.new("TextBox")
 local ConfirmButton = Instance.new("TextButton")
+local KeyInputLabel = Instance.new("TextLabel")
 local MainFrame = Instance.new("Frame")
 local HeaderLabel = Instance.new("TextLabel")
 local ESPButton = Instance.new("TextButton")
@@ -43,6 +44,16 @@ KeyFrame.Visible = true
 local KeyFrameCorner = Instance.new("UICorner")
 KeyFrameCorner.CornerRadius = UDim.new(0, 10)
 KeyFrameCorner.Parent = KeyFrame
+
+-- Configure the KeyInputLabel
+KeyInputLabel.Parent = KeyFrame
+KeyInputLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+KeyInputLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+KeyInputLabel.Position = UDim2.new(0.5, 0, 0.15, 0)
+KeyInputLabel.Size = UDim2.new(0, 150, 0, 30)
+KeyInputLabel.Text = "Enter Key Here"
+KeyInputLabel.TextScaled = true
+KeyInputLabel.AnchorPoint = Vector2.new(0.5, 0.5)
 
 -- Configure the KeyInputBox
 KeyInputBox.Parent = KeyFrame
