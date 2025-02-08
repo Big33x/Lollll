@@ -109,19 +109,68 @@ end)
 local ESPTab = Window:NewTab("ESP")
 local ESPSection = ESPTab:NewSection("ESP Controls")
 
+local espEnabled = false
+
 ESPSection:NewToggle("Enable ESP", "Toggle ESP On/Off", function(state)
-    if state then
+    espEnabled = state
+    if espEnabled then
         print("ESP Enabled")
         -- Add your ESP code here
+        enableESP()
     else
         print("ESP Disabled")
         -- Add your code to disable ESP here
+        disableESP()
     end
 end)
 
 ESPSection:NewColorPicker("ESP Color", "Choose ESP Color", Color3.fromRGB(0, 255, 0), function(color)
     print("ESP Color set to " .. tostring(color))
 end)
+
+local function enableESP()
+    local LocalPlayer = cloneref(game:GetService("Players").LocalPlayer)
+    local ReplicatedStorage = cloneref(game:GetService("ReplicatedStorage"))
+    local Workspace = cloneref(game:GetService("Workspace"))
+    local Camera = Workspace.CurrentCamera
+    local WorldToViewportPoint = Camera.WorldToViewportPoint
+    local RunService = cloneref(game:GetService("RunService"))
+    local TweenService = cloneref(game:GetService("TweenService"))
+    local Coregui = gethui() or cloneref(game:GetService("CoreGui"))
+    local gui = Instance.new("ScreenGui", Coregui)
+
+    while not game:IsLoaded() do task.wait() end
+    local Classes = {
+        ["PlayerClient"] = {},
+        ["Character"] = {},
+        ["BowClient"] = {},
+        ["Camera"] = {},
+        ["RangedWeaponClient"] = {},
+        ["GetEquippedItem"] = {},
+        ["FPS"] = {},
+    }
+
+    for _, v in pairs(getgc(true)) do
+        if typeof(v) == "function" and islclosure(v) then
+            local info = debug.getinfo(v)
+            local name = string.match(info.short_src, "%.([%w_]+)$")
+            if name and Classes[name] and info.name ~= nil then
+                Classes[name][info.name] = info.func
+            end
+        end
+    end
+    local Players = debug.getupvalue(Classes.PlayerClient.updatePlayers, 1)
+    local cache = {}
+    local HasEsp = {}
+    drawings.info = playertable
+    HasEsp[playertable.model] = drawings
+end
+
+local function disableESP()
+    -- Add your code to disable ESP here
+    -- For example, you can clear ESP drawings or disable certain ESP functionalities
+    print("ESP Disabled")
+end
 
 -- Misc Tab
 local MiscTab = Window:NewTab("Misc")
@@ -160,6 +209,27 @@ end)
 MiscSection:NewSlider("FOV", "Adjust Field of View", 120, 70, function(value)
     if fovEnabled then
         game.Workspace.CurrentCamera.FieldOfView = value
+    end
+end)
+
+-- Button to open and close the UI
+local toggleUI = true
+
+local ToggleUIButton = Instance.new("TextButton")
+ToggleUIButton.Text = "Toggle UI"
+ToggleUIButton.Size = UDim2.new(0, 100, 0, 50)
+ToggleUIButton.Position = UDim2.new(0, 10, 0, 10)
+ToggleUIButton.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
+ToggleUIButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleUIButton.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+ToggleUIButton.MouseButton1Click:Connect(function()
+    toggleUI = not toggleUI
+    Window:ToggleUI()
+    if toggleUI then
+        ToggleUIButton.Text = "Close UI"
+    else
+        ToggleUIButton.Text = "Open UI"
     end
 end)
 
