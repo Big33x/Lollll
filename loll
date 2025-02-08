@@ -13,31 +13,31 @@ local themeColors = {
 -- Create a new window and set its title and theme
 local window = DrRayLibrary:Load("FOG", "Default", themeColors)
 
--- Create the first tab with an image ID
-local tab1 = DrRayLibrary.newTab("Main", "ImageIdHere")
+-- Create the first tab
+local mainTab = window:NewTab("Main", "ImageIdHere")
 
 -- Add elements to the first tab
-tab1.newLabel("Welcome to FOG UI")
-tab1.newButton("Click Me", "Prints Hello!", function()
+mainTab:NewLabel("Welcome to FOG UI")
+mainTab:NewButton("Click Me", "Prints Hello!", function()
     print('Hello!')
 end)
-tab1.newToggle("Toggle", "Toggle! (prints the state)", true, function(toggleState)
+mainTab:NewToggle("Toggle", "Toggle! (prints the state)", true, function(toggleState)
     if toggleState then
         print("On")
     else
         print("Off")
     end
 end)
-tab1.newInput("Input", "Prints your input.", function(text)
+mainTab:NewInput("Input", "Prints your input.", function(text)
     print("Entered text: " .. text)
 end)
 
 -- Create the Aimbot tab
-local aimbotTab = DrRayLibrary.newTab("Aimbot", "ImageIdHere")
+local aimbotTab = window:NewTab("Aimbot", "ImageIdHere")
 
 -- Add elements to the Aimbot tab
-aimbotTab.newLabel("Aimbot Settings")
-aimbotTab.newToggle("Enable Aimbot", "Toggle Aimbot On/Off", false, function(state)
+aimbotTab:NewLabel("Aimbot Settings")
+aimbotTab:NewToggle("Enable Aimbot", "Toggle Aimbot On/Off", false, function(state)
     if state then
         print("Aimbot Enabled")
         -- Add your aimbot code here
@@ -46,21 +46,21 @@ aimbotTab.newToggle("Enable Aimbot", "Toggle Aimbot On/Off", false, function(sta
         -- Add your code to disable aimbot here
     end
 end)
-aimbotTab.newSlider("Aimbot Sensitivity", "Adjust Aimbot Sensitivity", 100, 1, 50, function(value)
+aimbotTab:NewSlider("Aimbot Sensitivity", "Adjust Aimbot Sensitivity", 100, 1, 50, function(value)
     print("Aimbot Sensitivity set to " .. value)
 end)
-aimbotTab.newDropdown("Aimbot Target", "Choose Aimbot Target", {"Head", "Body", "Legs"}, function(selectedOption)
+aimbotTab:NewDropdown("Aimbot Target", "Choose Aimbot Target", {"Head", "Body", "Legs"}, function(selectedOption)
     print("Aimbot Target set to " .. selectedOption)
 end)
 
 -- Create the ESP tab
-local espTab = DrRayLibrary.newTab("ESP", "ImageIdHere")
+local espTab = window:NewTab("ESP", "ImageIdHere")
 
 -- Add elements to the ESP tab
-espTab.newLabel("ESP Settings")
+espTab:NewLabel("ESP Settings")
 local espEnabled = false
 
-espTab.newToggle("Enable ESP", "Toggle ESP On/Off", false, function(state)
+espTab:NewToggle("Enable ESP", "Toggle ESP On/Off", false, function(state)
     espEnabled = state
     if espEnabled then
         print("ESP Enabled")
@@ -72,7 +72,7 @@ espTab.newToggle("Enable ESP", "Toggle ESP On/Off", false, function(state)
         disableESP()
     end
 end)
-espTab.newColorPicker("ESP Color", "Choose ESP Color", Color3.fromRGB(0, 255, 0), function(color)
+espTab:NewColorPicker("ESP Color", "Choose ESP Color", Color3.fromRGB(0, 255, 0), function(color)
     print("ESP Color set to " .. tostring(color))
 end)
 
@@ -121,14 +121,14 @@ local function disableESP()
 end
 
 -- Create the Misc tab
-local miscTab = DrRayLibrary.newTab("Misc", "ImageIdHere")
+local miscTab = window:NewTab("Misc", "ImageIdHere")
 
 -- Add elements to the Misc tab
-miscTab.newButton("Fly", "Enable Flying", function()
+miscTab:NewButton("Fly", "Enable Flying", function()
     print("Flying Enabled")
     -- Add your fly code here
 end)
-miscTab.newToggle("God Mode", "Toggle God Mode On/Off", false, function(state)
+miscTab:NewToggle("God Mode", "Toggle God Mode On/Off", false, function(state)
     if state then
         print("God Mode Enabled")
         -- Add your god mode code here
@@ -137,7 +137,7 @@ miscTab.newToggle("God Mode", "Toggle God Mode On/Off", false, function(state)
         -- Add your code to disable god mode here
     end
 end)
-miscTab.newSlider("Jump Power", "Adjust Jump Power", 300, 50, 100, function(value)
+miscTab:NewSlider("Jump Power", "Adjust Jump Power", 300, 50, 100, function(value)
     game.Players.LocalPlayer.Character.Humanoid.JumpPower = value
 end)
 
@@ -145,14 +145,14 @@ end)
 local fovEnabled = false
 local defaultFOV = game.Workspace.CurrentCamera.FieldOfView
 
-miscTab.newToggle("Enable FOV", "Toggle FOV On/Off", false, function(state)
+miscTab:NewToggle("Enable FOV", "Toggle FOV On/Off", false, function(state)
     fovEnabled = state
     if not fovEnabled then
         game.Workspace.CurrentCamera.FieldOfView = defaultFOV
     end
 end)
 
-miscTab.newSlider("FOV", "Adjust Field of View", 120, 70, defaultFOV, function(value)
+miscTab:NewSlider("FOV", "Adjust Field of View", 120, 70, defaultFOV, function(value)
     if fovEnabled then
         game.Workspace.CurrentCamera.FieldOfView = value
     end
@@ -195,7 +195,7 @@ if game:GetService("UserInputService").TouchEnabled then
         end
 
         Frame.InputBegan:Connect(function(input)
-            if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType.Touch then
                 dragToggle = true
                 dragStart = input.Position
                 startPos = Frame.Position
@@ -208,7 +208,7 @@ if game:GetService("UserInputService").TouchEnabled then
         end)
 
         Frame.InputChanged:Connect(function(input)
-            if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+            if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType.Touch then
                 dragInput = input
             end
         end)
