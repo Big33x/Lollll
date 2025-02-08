@@ -155,6 +155,23 @@ mainTab:NewInput("Input", "Prints your input.", function(text)
     print("Entered text: " .. text)
 end)
 
+-- Create a new tab
+local myTab = window:NewTab("My Tab", "ImageIdHere")
+
+-- Add elements to the new tab
+myTab:NewButton("Button", "Prints Hello!", function()
+    print('Hello!')
+end)
+myTab:NewSlider("Slider", "Epic slider", 1000, false, function(num)
+    print(num)
+end)
+myTab:NewKeybind("Input Key", "Press the key to start; it will be printed out.", function(key)
+    print(key)
+end)
+myTab:NewDropdown("Dropdown", "Select one of these options!", {"water", "dog", "air", "bb", "airplane", "wohhho", "yeay", "delete"}, function(selectedOption)
+    print(selectedOption)
+end)
+
 -- Button to open and close the UI
 local toggleUI = true
 
