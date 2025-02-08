@@ -146,6 +146,23 @@ MiscSection:NewSlider("Jump Power", "Adjust Jump Power", 300, 50, function(value
     game.Players.LocalPlayer.Character.Humanoid.JumpPower = value
 end)
 
+-- FOV Slider and Toggle
+local fovEnabled = false
+local defaultFOV = game.Workspace.CurrentCamera.FieldOfView
+
+MiscSection:NewToggle("Enable FOV", "Toggle FOV On/Off", function(state)
+    fovEnabled = state
+    if not fovEnabled then
+        game.Workspace.CurrentCamera.FieldOfView = defaultFOV
+    end
+end)
+
+MiscSection:NewSlider("FOV", "Adjust Field of View", 120, 70, function(value)
+    if fovEnabled then
+        game.Workspace.CurrentCamera.FieldOfView = value
+    end
+end)
+
 -- Optimize for mobile support
 if game:GetService("UserInputService").TouchEnabled then
     local function dragify(Frame)
