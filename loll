@@ -12,8 +12,7 @@ local function checkKey(inputKey)
         hasAccess = true
         print("Access Granted")
         KeyInputBox.Visible = false
-        ToggleButton.Visible = true
-        ESPButton.Visible = true
+        Frame.Visible = true
     else
         print("Access Denied")
     end
@@ -38,31 +37,29 @@ Frame.Size = UDim2.new(0, 200, 0, 200)
 Frame.Visible = false -- Initially hidden
 
 -- Configure the ToggleButton
-ToggleButton.Parent = ScreenGui
+ToggleButton.Parent = Frame
 ToggleButton.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
 ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-ToggleButton.Position = UDim2.new(0, 0, 0.5, -25)
+ToggleButton.Position = UDim2.new(0.5, -50, 0.3, -25)
 ToggleButton.Size = UDim2.new(0, 100, 0, 50)
 ToggleButton.Text = "Toggle UI"
 ToggleButton.Draggable = true
-ToggleButton.Visible = false -- Initially hidden
 
 -- Configure the KeyInputBox
-KeyInputBox.Parent = Frame
+KeyInputBox.Parent = ScreenGui
 KeyInputBox.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
 KeyInputBox.TextColor3 = Color3.fromRGB(255, 255, 255)
-KeyInputBox.Position = UDim2.new(0.5, -75, 0.3, -25)
+KeyInputBox.Position = UDim2.new(0.5, -75, 0.5, -25)
 KeyInputBox.Size = UDim2.new(0, 150, 0, 50)
 KeyInputBox.PlaceholderText = "Enter Key"
 
 -- Configure the ESPButton
-ESPButton.Parent = ScreenGui
+ESPButton.Parent = Frame
 ESPButton.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
 ESPButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-ESPButton.Position = UDim2.new(0, 0, 0.5, 25)
+ESPButton.Position = UDim2.new(0.5, -50, 0.7, -25)
 ESPButton.Size = UDim2.new(0, 100, 0, 50)
 ESPButton.Text = "Enable ESP"
-ESPButton.Visible = false -- Initially hidden
 
 -- Toggle UI visibility
 local function toggleUI()
@@ -104,6 +101,7 @@ end)
 
 -- ESP Feature
 local LocalPlayer = cloneref(game:GetService("Players").LocalPlayer)
+local ReplicatedStorage = cloneref(game:GetService("ReplicatedStorage"))
 local Workspace = cloneref(game:GetService("Workspace"))
 local Camera = Workspace.CurrentCamera
 local WorldToViewportPoint = Camera.WorldToViewportPoint
