@@ -33,7 +33,7 @@ ScreenGui.ResetOnSpawn = false
 
 -- Configure the Frame (main UI)
 Frame.Parent = ScreenGui
-Frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 Frame.Position = UDim2.new(0.5, -100, 0.5, -100)
 Frame.Size = UDim2.new(0, 200, 0, 200)
 Frame.Visible = false -- Initially hidden
@@ -49,7 +49,7 @@ ToggleButton.Draggable = true
 
 -- Configure the KeyInputBox
 KeyInputBox.Parent = ScreenGui
-KeyInputBox.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
+KeyInputBox.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 KeyInputBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 KeyInputBox.Position = UDim2.new(0.5, -75, 0.45, -25)
 KeyInputBox.Size = UDim2.new(0, 150, 0, 50)
@@ -58,7 +58,7 @@ KeyInputBox.Text = "" -- Clear any default text
 
 -- Configure the ConfirmButton
 ConfirmButton.Parent = ScreenGui
-ConfirmButton.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
+ConfirmButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 ConfirmButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 ConfirmButton.Position = UDim2.new(0.5, -50, 0.55, -25)
 ConfirmButton.Size = UDim2.new(0, 100, 0, 50)
@@ -109,12 +109,12 @@ ConfirmButton.MouseButton1Click:Connect(function()
 end)
 
 -- ESP Feature
-local LocalPlayer = cloneref(game:GetService("Players").LocalPlayer)
-local ReplicatedStorage = cloneref(game:GetService("ReplicatedStorage"))
-local Workspace = cloneref(game:GetService("Workspace"))
+local LocalPlayer = game:GetService("Players").LocalPlayer
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Workspace = game:GetService("Workspace")
 local Camera = Workspace.CurrentCamera
 local WorldToViewportPoint = Camera.WorldToViewportPoint
-local RunService = cloneref(game:GetService("RunService"))
+local RunService = game:GetService("RunService")
 
 local Classes = {
     ["PlayerClient"] = {},
