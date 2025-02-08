@@ -1,166 +1,98 @@
--- Optimization settings
-local TweenService = game:GetService("TweenService")
-local UIS = game:GetService("UserInputService")
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/kav"))()
+
+-- Define theme colors
+local themeColors = {
+    SchemeColor = Color3.fromRGB(0, 0, 255), -- Blue color
+    Background = Color3.fromRGB(255, 255, 255), -- White background
+    Header = Color3.fromRGB(0, 0, 255), -- Blue header
+    TextColor = Color3.fromRGB(0, 0, 0), -- Black text
+    ElementColor = Color3.fromRGB(220, 220, 220) -- Light grey elements
+}
+
+local Window = Library.CreateLib("FOG", themeColors)
+local Tab = Window:NewTab("Main")
+local Section = Tab:NewSection("Controls")
 
 -- Key System
 local accessKey = "TEST123" -- Change this to your desired key
 local hasAccess = false
 
--- Function to check the key
-local function checkKey(inputKey)
+-- Create the key input elements
+local KeyInputBox = Section:NewTextBox("Enter Key", "Input your access key here", function(inputKey)
     if inputKey == accessKey then
         hasAccess = true
         print("Access Granted")
-        KeyFrame.Visible = false
-        showMainFrame()
+        -- Show the main UI
+        Window:ToggleUI()
     else
         print("Access Denied")
     end
-end
-
--- Create UI elements
-local ScreenGui = Instance.new("ScreenGui")
-local KeyFrame = Instance.new("Frame")
-local KeyInputBox = Instance.new("TextBox")
-local ConfirmButton = Instance.new("TextButton")
-local KeyInputLabel = Instance.new("TextLabel")
-local MainFrame = Instance.new("Frame")
-local HeaderLabel = Instance.new("TextLabel")
-local ESPButton = Instance.new("TextButton")
-
--- Configure the ScreenGui
-ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-ScreenGui.ResetOnSpawn = false
-
--- Configure the KeyFrame (for key input)
-KeyFrame.Parent = ScreenGui
-KeyFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-KeyFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
-KeyFrame.Size = UDim2.new(0, 200, 0, 150)
-KeyFrame.AnchorPoint = Vector2.new(0.5, 0.5)
-KeyFrame.Visible = true
-
--- Add a UICorner for rounded corners to KeyFrame
-local KeyFrameCorner = Instance.new("UICorner")
-KeyFrameCorner.CornerRadius = UDim.new(0, 10)
-KeyFrameCorner.Parent = KeyFrame
-
--- Configure the KeyInputLabel
-KeyInputLabel.Parent = KeyFrame
-KeyInputLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-KeyInputLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
-KeyInputLabel.Position = UDim2.new(0.5, 0, 0.15, 0)
-KeyInputLabel.Size = UDim2.new(0, 150, 0, 30)
-KeyInputLabel.Text = "Enter Key Here"
-KeyInputLabel.TextScaled = true
-KeyInputLabel.AnchorPoint = Vector2.new(0.5, 0.5)
-
--- Configure the KeyInputBox
-KeyInputBox.Parent = KeyFrame
-KeyInputBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-KeyInputBox.TextColor3 = Color3.fromRGB(0, 0, 0)
-KeyInputBox.Position = UDim2.new(0.5, 0, 0.4, 0)
-KeyInputBox.Size = UDim2.new(0, 150, 0, 30)
-KeyInputBox.PlaceholderText = "Enter Key"
-KeyInputBox.Text = "" -- Clear any default text
-KeyInputBox.AnchorPoint = Vector2.new(0.5, 0.5)
-
--- Add rounded corners to KeyInputBox
-local KeyInputBoxCorner = Instance.new("UICorner")
-KeyInputBoxCorner.CornerRadius = UDim.new(0, 10)
-KeyInputBoxCorner.Parent = KeyInputBox
-
--- Configure the ConfirmButton
-ConfirmButton.Parent = KeyFrame
-ConfirmButton.BackgroundColor3 = Color3.fromRGB(0, 0, 255) -- Blue background
-ConfirmButton.TextColor3 = Color3.fromRGB(255, 255, 255) -- White text
-ConfirmButton.Position = UDim2.new(0.5, 0, 0.75, 0)
-ConfirmButton.Size = UDim2.new(0, 100, 0, 30)
-ConfirmButton.Text = "Check Key"
-ConfirmButton.TextScaled = true
-ConfirmButton.AnchorPoint = Vector2.new(0.5, 0.5)
-
--- Add rounded corners to ConfirmButton
-local ConfirmButtonCorner = Instance.new("UICorner")
-ConfirmButtonCorner.CornerRadius = UDim.new(0, 10)
-ConfirmButtonCorner.Parent = ConfirmButton
-
--- Configure the MainFrame (main UI)
-MainFrame.Parent = ScreenGui
-MainFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 255) -- Blue background
-MainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
-MainFrame.Size = UDim2.new(0, 300, 0, 300)
-MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
-MainFrame.Visible = false -- Initially hidden
-MainFrame.Active = true
-MainFrame.Draggable = true
-
--- Add a UICorner for rounded corners to MainFrame
-local MainFrameCorner = Instance.new("UICorner")
-MainFrameCorner.CornerRadius = UDim.new(0, 10)
-MainFrameCorner.Parent = MainFrame
-
--- Configure the HeaderLabel
-HeaderLabel.Parent = MainFrame
-HeaderLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
-HeaderLabel.TextColor3 = Color3.fromRGB(255, 255, 255) -- White text
-HeaderLabel.Position = UDim2.new(0.5, 0, 0.2, 0)
-HeaderLabel.Size = UDim2.new(0, 150, 0, 50)
-HeaderLabel.Text = "FOG"
-HeaderLabel.TextScaled = true
-HeaderLabel.AnchorPoint = Vector2.new(0.5, 0.5)
-
--- Configure the ESPButton
-ESPButton.Parent = MainFrame
-ESPButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255) -- White background
-ESPButton.TextColor3 = Color3.fromRGB(0, 0, 255) -- Blue text
-ESPButton.Position = UDim2.new(0.5, 0, 0.6, 0)
-ESPButton.Size = UDim2.new(0, 150, 0, 50)
-ESPButton.Text = "Enable ESP"
-ESPButton.TextScaled = true
-ESPButton.AnchorPoint = Vector2.new(0.5, 0.5)
-
--- Add a UICorner for rounded corners to ESPButton
-local ESPButtonCorner = Instance.new("UICorner")
-ESPButtonCorner.CornerRadius = UDim.new(0, 10)
-ESPButtonCorner.Parent = ESPButton
-
--- Function to show the MainFrame with animation
-local function showMainFrame()
-    MainFrame.Position = UDim2.new(0.5, 0, 1, 0)
-    MainFrame.Visible = true
-    TweenService:Create(MainFrame, TweenInfo.new(0.5, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {Position = UDim2.new(0.5, 0, 0.5, 0)}):Play()
-end
-
--- Add functionality to the ConfirmButton
-ConfirmButton.MouseButton1Click:Connect(function()
-    checkKey(KeyInputBox.Text)
 end)
 
--- Optimize for mobile support
-if UIS.TouchEnabled then
-    MainFrame.Size = UDim2.new(0, 300, 0, 300) -- Increase size for mobile
-    HeaderLabel.Size = UDim2.new(0, 200, 0, 50) -- Increase size for mobile
-    ESPButton.Size = UDim2.new(0, 200, 0, 50) -- Increase size for mobile
-end
+-- Main UI Elements
+Section:NewButton("ButtonText", "ButtonInfo", function()
+    print("Clicked")
+end)
 
--- ESP feature toggle
-local espEnabled = false
-
-local function toggleESP()
-    espEnabled = not espEnabled
-    if espEnabled then
-        ESPButton.Text = "Disable ESP"
-        print("ESP Enabled")
-        -- Add your ESP code here
+Section:NewToggle("ToggleText", "ToggleInfo", function(state)
+    if state then
+        print("Toggle On")
     else
-        ESPButton.Text = "Enable ESP"
-        print("ESP Disabled")
-        -- Add your code to disable ESP here
+        print("Toggle Off")
     end
+end)
+
+getgenv().Toggled = false
+local toggle = Section:NewToggle("Toggle", "Info", function(state)
+    getgenv().Toggled = state
+end)
+
+game:GetService("RunService").RenderStepped:Connect(function()
+    if getgenv().Toggled then
+        toggle:UpdateToggle("Toggle On")
+    else
+        toggle:UpdateToggle("Toggle Off")
+    end
+end)
+
+Section:NewSlider("SliderText", "SliderInfo", 500, 0, function(s) -- 500 (MaxValue) | 0 (MinValue)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
+end)
+
+Section:NewTextBox("TextboxText", "TextboxInfo", function(txt)
+    print(txt)
+end)
+
+Section:NewKeybind("KeybindToggleUI", "Toggle UI", Enum.KeyCode.F, function()
+    Library:ToggleUI()
+end)
+
+Section:NewDropdown("DropdownText", "DropdownInfo", {"Option 1", "Option 2", "Option 3"}, function(currentOption)
+    print(currentOption)
+end)
+
+local oldList = {
+  "2019",
+  "2020"
+}
+
+local newList = {
+  "2021",
+  "2022"
+}
+
+local dropdown = Section:NewDropdown("Dropdown", "Info", oldList, function() end)
+
+Section:NewButton("Update Dropdown", "Refreshes Dropdown", function()
+    dropdown:Refresh(newList)
+end)
+
+Section:NewColorPicker("Color Text", "Color Info", Color3.fromRGB(0, 0, 0), function(color)
+    print(color)
+end)
+
+for theme, color in pairs(themeColors) do
+    Section:NewColorPicker(theme, "Change your " .. theme, color, function(color3)
+        Library:ChangeColor(theme, color3)
+    end)
 end
-
--- Add functionality to the ESP button
-ESPButton.MouseButton1Click:Connect(toggleESP)
-
-return ScreenGui
