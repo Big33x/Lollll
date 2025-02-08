@@ -1,4 +1,5 @@
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/kav"))()
+-- Load the DrRay library from the GitHub repository Library
+local DrRayLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/AZYsGithub/DrRay-UI-Library/main/DrRay.lua"))()
 
 -- Define theme colors
 local themeColors = {
@@ -9,85 +10,34 @@ local themeColors = {
     ElementColor = Color3.fromRGB(220, 220, 220) -- Light grey elements
 }
 
-local Window = Library.CreateLib("FOG", themeColors)
+-- Create a new window and set its title and theme
+local window = DrRayLibrary:Load("FOG", "Default", themeColors)
 
--- Main Tab
-local MainTab = Window:NewTab("Main")
-local MainSection = MainTab:NewSection("Controls")
+-- Create the first tab with an image ID
+local tab1 = DrRayLibrary.newTab("Main", "ImageIdHere")
 
--- Main UI Elements
-MainSection:NewButton("ButtonText", "ButtonInfo", function()
-    print("Clicked")
+-- Add elements to the first tab
+tab1.newLabel("Welcome to FOG UI")
+tab1.newButton("Click Me", "Prints Hello!", function()
+    print('Hello!')
 end)
-
-MainSection:NewToggle("ToggleText", "ToggleInfo", function(state)
-    if state then
-        print("Toggle On")
+tab1.newToggle("Toggle", "Toggle! (prints the state)", true, function(toggleState)
+    if toggleState then
+        print("On")
     else
-        print("Toggle Off")
+        print("Off")
     end
 end)
-
-getgenv().Toggled = false
-local toggle = MainSection:NewToggle("Toggle", "Info", function(state)
-    getgenv().Toggled = state
+tab1.newInput("Input", "Prints your input.", function(text)
+    print("Entered text: " .. text)
 end)
 
-game:GetService("RunService").RenderStepped:Connect(function()
-    if getgenv().Toggled then
-        toggle:UpdateToggle("Toggle On")
-    else
-        toggle:UpdateToggle("Toggle Off")
-    end
-end)
+-- Create the Aimbot tab
+local aimbotTab = DrRayLibrary.newTab("Aimbot", "ImageIdHere")
 
-MainSection:NewSlider("SliderText", "SliderInfo", 500, 0, function(s) -- 500 (MaxValue) | 0 (MinValue)
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
-end)
-
-MainSection:NewTextBox("TextboxText", "TextboxInfo", function(txt)
-    print(txt)
-end)
-
-MainSection:NewKeybind("KeybindToggleUI", "Toggle UI", Enum.KeyCode.F, function()
-    Library:ToggleUI()
-end)
-
-MainSection:NewDropdown("DropdownText", "DropdownInfo", {"Option 1", "Option 2", "Option 3"}, function(currentOption)
-    print(currentOption)
-end)
-
-local oldList = {
-  "2019",
-  "2020"
-}
-
-local newList = {
-  "2021",
-  "2022"
-}
-
-local dropdown = MainSection:NewDropdown("Dropdown", "Info", oldList, function() end)
-
-MainSection:NewButton("Update Dropdown", "Refreshes Dropdown", function()
-    dropdown:Refresh(newList)
-end)
-
-MainSection:NewColorPicker("Color Text", "Color Info", Color3.fromRGB(0, 0, 0), function(color)
-    print(color)
-end)
-
-for theme, color in pairs(themeColors) do
-    MainSection:NewColorPicker(theme, "Change your " .. theme, color, function(color3)
-        Library:ChangeColor(theme, color3)
-    end)
-end
-
--- Aimbot Tab
-local AimbotTab = Window:NewTab("Aimbot")
-local AimbotSection = AimbotTab:NewSection("Aimbot Controls")
-
-AimbotSection:NewToggle("Enable Aimbot", "Toggle Aimbot On/Off", function(state)
+-- Add elements to the Aimbot tab
+aimbotTab.newLabel("Aimbot Settings")
+aimbotTab.newToggle("Enable Aimbot", "Toggle Aimbot On/Off", false, function(state)
     if state then
         print("Aimbot Enabled")
         -- Add your aimbot code here
@@ -96,22 +46,21 @@ AimbotSection:NewToggle("Enable Aimbot", "Toggle Aimbot On/Off", function(state)
         -- Add your code to disable aimbot here
     end
 end)
-
-AimbotSection:NewSlider("Aimbot Sensitivity", "Adjust Aimbot Sensitivity", 100, 1, function(value)
+aimbotTab.newSlider("Aimbot Sensitivity", "Adjust Aimbot Sensitivity", 100, 1, 50, function(value)
     print("Aimbot Sensitivity set to " .. value)
 end)
-
-AimbotSection:NewDropdown("Aimbot Target", "Choose Aimbot Target", {"Head", "Body", "Legs"}, function(currentOption)
-    print("Aimbot Target set to " .. currentOption)
+aimbotTab.newDropdown("Aimbot Target", "Choose Aimbot Target", {"Head", "Body", "Legs"}, function(selectedOption)
+    print("Aimbot Target set to " .. selectedOption)
 end)
 
--- ESP Tab
-local ESPTab = Window:NewTab("ESP")
-local ESPSection = ESPTab:NewSection("ESP Controls")
+-- Create the ESP tab
+local espTab = DrRayLibrary.newTab("ESP", "ImageIdHere")
 
+-- Add elements to the ESP tab
+espTab.newLabel("ESP Settings")
 local espEnabled = false
 
-ESPSection:NewToggle("Enable ESP", "Toggle ESP On/Off", function(state)
+espTab.newToggle("Enable ESP", "Toggle ESP On/Off", false, function(state)
     espEnabled = state
     if espEnabled then
         print("ESP Enabled")
@@ -123,8 +72,7 @@ ESPSection:NewToggle("Enable ESP", "Toggle ESP On/Off", function(state)
         disableESP()
     end
 end)
-
-ESPSection:NewColorPicker("ESP Color", "Choose ESP Color", Color3.fromRGB(0, 255, 0), function(color)
+espTab.newColorPicker("ESP Color", "Choose ESP Color", Color3.fromRGB(0, 255, 0), function(color)
     print("ESP Color set to " .. tostring(color))
 end)
 
@@ -172,16 +120,15 @@ local function disableESP()
     print("ESP Disabled")
 end
 
--- Misc Tab
-local MiscTab = Window:NewTab("Misc")
-local MiscSection = MiscTab:NewSection("Misc Controls")
+-- Create the Misc tab
+local miscTab = DrRayLibrary.newTab("Misc", "ImageIdHere")
 
-MiscSection:NewButton("Fly", "Enable Flying", function()
+-- Add elements to the Misc tab
+miscTab.newButton("Fly", "Enable Flying", function()
     print("Flying Enabled")
     -- Add your fly code here
 end)
-
-MiscSection:NewToggle("God Mode", "Toggle God Mode On/Off", function(state)
+miscTab.newToggle("God Mode", "Toggle God Mode On/Off", false, function(state)
     if state then
         print("God Mode Enabled")
         -- Add your god mode code here
@@ -190,8 +137,7 @@ MiscSection:NewToggle("God Mode", "Toggle God Mode On/Off", function(state)
         -- Add your code to disable god mode here
     end
 end)
-
-MiscSection:NewSlider("Jump Power", "Adjust Jump Power", 300, 50, function(value)
+miscTab.newSlider("Jump Power", "Adjust Jump Power", 300, 50, 100, function(value)
     game.Players.LocalPlayer.Character.Humanoid.JumpPower = value
 end)
 
@@ -199,14 +145,14 @@ end)
 local fovEnabled = false
 local defaultFOV = game.Workspace.CurrentCamera.FieldOfView
 
-MiscSection:NewToggle("Enable FOV", "Toggle FOV On/Off", function(state)
+miscTab.newToggle("Enable FOV", "Toggle FOV On/Off", false, function(state)
     fovEnabled = state
     if not fovEnabled then
         game.Workspace.CurrentCamera.FieldOfView = defaultFOV
     end
 end)
 
-MiscSection:NewSlider("FOV", "Adjust Field of View", 120, 70, function(value)
+miscTab.newSlider("FOV", "Adjust Field of View", 120, 70, defaultFOV, function(value)
     if fovEnabled then
         game.Workspace.CurrentCamera.FieldOfView = value
     end
@@ -225,7 +171,7 @@ ToggleUIButton.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
 ToggleUIButton.MouseButton1Click:Connect(function()
     toggleUI = not toggleUI
-    Window:ToggleUI()
+    window:ToggleUI()
     if toggleUI then
         ToggleUIButton.Text = "Close UI"
     else
@@ -274,5 +220,5 @@ if game:GetService("UserInputService").TouchEnabled then
         end)
     end
 
-    dragify(Window)
+    dragify(window)
 end
