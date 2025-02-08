@@ -24,75 +24,128 @@ local KeyInputBox = Section:NewTextBox("Enter Key", "Input your access key here"
         print("Access Granted")
         -- Show the main UI
         Window:ToggleUI()
+        -- Destroy or hide the key input elements
+        KeyInputBox:Destroy()
     else
         print("Access Denied")
     end
 end)
 
 -- Main UI Elements
-Section:NewButton("ButtonText", "ButtonInfo", function()
-    print("Clicked")
-end)
-
-Section:NewToggle("ToggleText", "ToggleInfo", function(state)
-    if state then
-        print("Toggle On")
-    else
-        print("Toggle Off")
-    end
-end)
-
-getgenv().Toggled = false
-local toggle = Section:NewToggle("Toggle", "Info", function(state)
-    getgenv().Toggled = state
-end)
-
-game:GetService("RunService").RenderStepped:Connect(function()
-    if getgenv().Toggled then
-        toggle:UpdateToggle("Toggle On")
-    else
-        toggle:UpdateToggle("Toggle Off")
-    end
-end)
-
-Section:NewSlider("SliderText", "SliderInfo", 500, 0, function(s) -- 500 (MaxValue) | 0 (MinValue)
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
-end)
-
-Section:NewTextBox("TextboxText", "TextboxInfo", function(txt)
-    print(txt)
-end)
-
-Section:NewKeybind("KeybindToggleUI", "Toggle UI", Enum.KeyCode.F, function()
-    Library:ToggleUI()
-end)
-
-Section:NewDropdown("DropdownText", "DropdownInfo", {"Option 1", "Option 2", "Option 3"}, function(currentOption)
-    print(currentOption)
-end)
-
-local oldList = {
-  "2019",
-  "2020"
-}
-
-local newList = {
-  "2021",
-  "2022"
-}
-
-local dropdown = Section:NewDropdown("Dropdown", "Info", oldList, function() end)
-
-Section:NewButton("Update Dropdown", "Refreshes Dropdown", function()
-    dropdown:Refresh(newList)
-end)
-
-Section:NewColorPicker("Color Text", "Color Info", Color3.fromRGB(0, 0, 0), function(color)
-    print(color)
-end)
-
-for theme, color in pairs(themeColors) do
-    Section:NewColorPicker(theme, "Change your " .. theme, color, function(color3)
-        Library:ChangeColor(theme, color3)
+local function createMainUI()
+    Section:NewButton("ButtonText", "ButtonInfo", function()
+        print("Clicked")
     end)
+
+    Section:NewToggle("ToggleText", "ToggleInfo", function(state)
+        if state then
+            print("Toggle On")
+        else
+            print("Toggle Off")
+        end
+    end)
+
+    getgenv().Toggled = false
+    local toggle = Section:NewToggle("Toggle", "Info", function(state)
+        getgenv().Toggled = state
+    end)
+
+    game:GetService("RunService").RenderStepped:Connect(function()
+        if getgenv().Toggled then
+            toggle:UpdateToggle("Toggle On")
+        else
+            toggle:UpdateToggle("Toggle Off")
+        end
+    end)
+
+    Section:NewSlider("SliderText", "SliderInfo", 500, 0, function(s) -- 500 (MaxValue) | 0 (MinValue)
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
+    end)
+
+    Section:NewTextBox("TextboxText", "TextboxInfo", function(txt)
+        print(txt)
+    end)
+
+    Section:NewKeybind("KeybindToggleUI", "Toggle UI", Enum.KeyCode.F, function()
+        Library:ToggleUI()
+    end)
+
+    Section:NewDropdown("DropdownText", "DropdownInfo", {"Option 1", "Option 2", "Option 3"}, function(currentOption)
+        print(currentOption)
+    end)
+
+    local oldList = {
+      "2019",
+      "2020"
+    }
+
+    local newList = {
+      "2021",
+      "2022"
+    }
+
+    local dropdown = Section:NewDropdown("Dropdown", "Info", oldList, function() end)
+
+    Section:NewButton("Update Dropdown", "Refreshes Dropdown", function()
+        dropdown:Refresh(newList)
+    end)
+
+    Section:NewColorPicker("Color Text", "Color Info", Color3.fromRGB(0, 0, 0), function(color)
+        print(color)
+    end)
+
+    for theme, color in pairs(themeColors) do
+        Section:NewColorPicker(theme, "Change your " .. theme, color, function(color3)
+            Library:ChangeColor(theme, color3)
+        end)
+    end
+end
+
+-- Call the function to create the main UI elements after the key is granted
+if hasAccess then
+    createMainUI()
+end
+
+-- Optimize for mobile support
+if UIS.TouchEnabled then
+    local function dragify(Frame)
+        local dragToggle = nil
+        local dragSpeed = 0.125
+        local dragInput = nil
+        local dragStart = nil
+        local startPos = nil
+
+        local function updateInput(input)
+            local delta = input.Position - dragStart
+            local position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+            TweenService:Create(Frame, TweenInfo.new(dragSpeed), {Position = position}):Play()
+        end
+
+        Frame.InputBegan:Connect(function(input)
+            if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+                dragToggle = true
+                dragStart = input.Position
+                startPos = Frame.Position
+                input.Changed:Connect(function()
+                    if input.UserInputState == Enum.UserInputState.End then
+                        dragToggle = false
+                    end
+                end)
+            end
+        end)
+
+        Frame.InputChanged:Connect(function(input)
+            if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+                dragInput = input
+            end
+        end)
+
+        game:GetService("UserInputService").InputChanged:Connect(function(input)
+            if input == dragInput and dragToggle then
+                updateInput(input)
+            end
+        end)
+    end
+
+    dragify(Window)
 end
