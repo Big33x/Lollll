@@ -11,7 +11,9 @@ local function checkKey(inputKey)
     if inputKey == accessKey then
         hasAccess = true
         print("Access Granted")
-        Frame.Visible = true -- Show the UI after access is granted
+        KeyInputBox.Visible = false
+        ToggleButton.Visible = true
+        ESPButton.Visible = true
     else
         print("Access Denied")
     end
@@ -37,27 +39,30 @@ Frame.Visible = false -- Initially hidden
 
 -- Configure the ToggleButton
 ToggleButton.Parent = ScreenGui
-ToggleButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+ToggleButton.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
 ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 ToggleButton.Position = UDim2.new(0, 0, 0.5, -25)
 ToggleButton.Size = UDim2.new(0, 100, 0, 50)
 ToggleButton.Text = "Toggle UI"
 ToggleButton.Draggable = true
+ToggleButton.Visible = false -- Initially hidden
 
 -- Configure the KeyInputBox
 KeyInputBox.Parent = Frame
-KeyInputBox.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
+KeyInputBox.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
+KeyInputBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 KeyInputBox.Position = UDim2.new(0.5, -75, 0.3, -25)
 KeyInputBox.Size = UDim2.new(0, 150, 0, 50)
 KeyInputBox.PlaceholderText = "Enter Key"
 
 -- Configure the ESPButton
-ESPButton.Parent = Frame
-ESPButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+ESPButton.Parent = ScreenGui
+ESPButton.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
 ESPButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-ESPButton.Position = UDim2.new(0.5, -75, 0.7, -25)
-ESPButton.Size = UDim2.new(0, 150, 0, 50)
+ESPButton.Position = UDim2.new(0, 0, 0.5, 25)
+ESPButton.Size = UDim2.new(0, 100, 0, 50)
 ESPButton.Text = "Enable ESP"
+ESPButton.Visible = false -- Initially hidden
 
 -- Toggle UI visibility
 local function toggleUI()
@@ -68,7 +73,7 @@ local function toggleUI()
     end
 end
 
--- ESP Feature
+-- Toggle ESP feature
 local espEnabled = false
 
 local function toggleESP()
@@ -99,13 +104,10 @@ end)
 
 -- ESP Feature
 local LocalPlayer = cloneref(game:GetService("Players").LocalPlayer)
-local ReplicatedStorage = cloneref(game:GetService("ReplicatedStorage"))
 local Workspace = cloneref(game:GetService("Workspace"))
 local Camera = Workspace.CurrentCamera
 local WorldToViewportPoint = Camera.WorldToViewportPoint
 local RunService = cloneref(game:GetService("RunService"))
-local Coregui = gethui() or cloneref(game:GetService("CoreGui"))
-local gui = Instance.new("ScreenGui", Coregui)
 
 local Classes = {
     ["PlayerClient"] = {},
@@ -141,7 +143,7 @@ local function updateESP()
                 if not HasEsp[player.Character] then
                     local box = Drawing.new("Square")
                     box.Visible = true
-                    box.Color = Color3.new(1, 0, 0)
+                    box.Color = Color3.new(0, 0, 255)
                     box.Thickness = 2
                     box.Transparency = 1
                     HasEsp[player.Character] = box
