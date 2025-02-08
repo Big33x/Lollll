@@ -12,6 +12,7 @@ local function checkKey(inputKey)
         hasAccess = true
         print("Access Granted")
         KeyInputBox.Visible = false
+        ConfirmButton.Visible = false
         Frame.Visible = true
     else
         print("Access Denied")
@@ -23,6 +24,7 @@ local ScreenGui = Instance.new("ScreenGui")
 local Frame = Instance.new("Frame")
 local ToggleButton = Instance.new("TextButton")
 local KeyInputBox = Instance.new("TextBox")
+local ConfirmButton = Instance.new("TextButton")
 local ESPButton = Instance.new("TextButton")
 
 -- Configure the ScreenGui
@@ -49,9 +51,17 @@ ToggleButton.Draggable = true
 KeyInputBox.Parent = ScreenGui
 KeyInputBox.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
 KeyInputBox.TextColor3 = Color3.fromRGB(255, 255, 255)
-KeyInputBox.Position = UDim2.new(0.5, -75, 0.5, -25)
+KeyInputBox.Position = UDim2.new(0.5, -75, 0.4, -25)
 KeyInputBox.Size = UDim2.new(0, 150, 0, 50)
 KeyInputBox.PlaceholderText = "Enter Key"
+
+-- Configure the ConfirmButton
+ConfirmButton.Parent = ScreenGui
+ConfirmButton.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
+ConfirmButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+ConfirmButton.Position = UDim2.new(0.5, -50, 0.6, -25)
+ConfirmButton.Size = UDim2.new(0, 100, 0, 50)
+ConfirmButton.Text = "Confirm"
 
 -- Configure the ESPButton
 ESPButton.Parent = Frame
@@ -93,10 +103,8 @@ end
 -- Add functionality to the buttons
 ToggleButton.MouseButton1Click:Connect(toggleUI)
 ESPButton.MouseButton1Click:Connect(toggleESP)
-KeyInputBox.FocusLost:Connect(function(enterPressed)
-    if enterPressed then
-        checkKey(KeyInputBox.Text)
-    end
+ConfirmButton.MouseButton1Click:Connect(function()
+    checkKey(KeyInputBox.Text)
 end)
 
 -- ESP Feature
