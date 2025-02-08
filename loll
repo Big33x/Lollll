@@ -10,15 +10,17 @@ local themeColors = {
 }
 
 local Window = Library.CreateLib("FOG", themeColors)
-local Tab = Window:NewTab("Main")
-local Section = Tab:NewSection("Controls")
+
+-- Main Tab
+local MainTab = Window:NewTab("Main")
+local MainSection = MainTab:NewSection("Controls")
 
 -- Main UI Elements
-Section:NewButton("ButtonText", "ButtonInfo", function()
+MainSection:NewButton("ButtonText", "ButtonInfo", function()
     print("Clicked")
 end)
 
-Section:NewToggle("ToggleText", "ToggleInfo", function(state)
+MainSection:NewToggle("ToggleText", "ToggleInfo", function(state)
     if state then
         print("Toggle On")
     else
@@ -27,7 +29,7 @@ Section:NewToggle("ToggleText", "ToggleInfo", function(state)
 end)
 
 getgenv().Toggled = false
-local toggle = Section:NewToggle("Toggle", "Info", function(state)
+local toggle = MainSection:NewToggle("Toggle", "Info", function(state)
     getgenv().Toggled = state
 end)
 
@@ -39,19 +41,19 @@ game:GetService("RunService").RenderStepped:Connect(function()
     end
 end)
 
-Section:NewSlider("SliderText", "SliderInfo", 500, 0, function(s) -- 500 (MaxValue) | 0 (MinValue)
+MainSection:NewSlider("SliderText", "SliderInfo", 500, 0, function(s) -- 500 (MaxValue) | 0 (MinValue)
     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
 end)
 
-Section:NewTextBox("TextboxText", "TextboxInfo", function(txt)
+MainSection:NewTextBox("TextboxText", "TextboxInfo", function(txt)
     print(txt)
 end)
 
-Section:NewKeybind("KeybindToggleUI", "Toggle UI", Enum.KeyCode.F, function()
+MainSection:NewKeybind("KeybindToggleUI", "Toggle UI", Enum.KeyCode.F, function()
     Library:ToggleUI()
 end)
 
-Section:NewDropdown("DropdownText", "DropdownInfo", {"Option 1", "Option 2", "Option 3"}, function(currentOption)
+MainSection:NewDropdown("DropdownText", "DropdownInfo", {"Option 1", "Option 2", "Option 3"}, function(currentOption)
     print(currentOption)
 end)
 
@@ -65,21 +67,84 @@ local newList = {
   "2022"
 }
 
-local dropdown = Section:NewDropdown("Dropdown", "Info", oldList, function() end)
+local dropdown = MainSection:NewDropdown("Dropdown", "Info", oldList, function() end)
 
-Section:NewButton("Update Dropdown", "Refreshes Dropdown", function()
+MainSection:NewButton("Update Dropdown", "Refreshes Dropdown", function()
     dropdown:Refresh(newList)
 end)
 
-Section:NewColorPicker("Color Text", "Color Info", Color3.fromRGB(0, 0, 0), function(color)
+MainSection:NewColorPicker("Color Text", "Color Info", Color3.fromRGB(0, 0, 0), function(color)
     print(color)
 end)
 
 for theme, color in pairs(themeColors) do
-    Section:NewColorPicker(theme, "Change your " .. theme, color, function(color3)
+    MainSection:NewColorPicker(theme, "Change your " .. theme, color, function(color3)
         Library:ChangeColor(theme, color3)
     end)
 end
+
+-- Aimbot Tab
+local AimbotTab = Window:NewTab("Aimbot")
+local AimbotSection = AimbotTab:NewSection("Aimbot Controls")
+
+AimbotSection:NewToggle("Enable Aimbot", "Toggle Aimbot On/Off", function(state)
+    if state then
+        print("Aimbot Enabled")
+        -- Add your aimbot code here
+    else
+        print("Aimbot Disabled")
+        -- Add your code to disable aimbot here
+    end
+end)
+
+AimbotSection:NewSlider("Aimbot Sensitivity", "Adjust Aimbot Sensitivity", 100, 1, function(value)
+    print("Aimbot Sensitivity set to " .. value)
+end)
+
+AimbotSection:NewDropdown("Aimbot Target", "Choose Aimbot Target", {"Head", "Body", "Legs"}, function(currentOption)
+    print("Aimbot Target set to " .. currentOption)
+end)
+
+-- ESP Tab
+local ESPTab = Window:NewTab("ESP")
+local ESPSection = ESPTab:NewSection("ESP Controls")
+
+ESPSection:NewToggle("Enable ESP", "Toggle ESP On/Off", function(state)
+    if state then
+        print("ESP Enabled")
+        -- Add your ESP code here
+    else
+        print("ESP Disabled")
+        -- Add your code to disable ESP here
+    end
+end)
+
+ESPSection:NewColorPicker("ESP Color", "Choose ESP Color", Color3.fromRGB(0, 255, 0), function(color)
+    print("ESP Color set to " .. tostring(color))
+end)
+
+-- Misc Tab
+local MiscTab = Window:NewTab("Misc")
+local MiscSection = MiscTab:NewSection("Misc Controls")
+
+MiscSection:NewButton("Fly", "Enable Flying", function()
+    print("Flying Enabled")
+    -- Add your fly code here
+end)
+
+MiscSection:NewToggle("God Mode", "Toggle God Mode On/Off", function(state)
+    if state then
+        print("God Mode Enabled")
+        -- Add your god mode code here
+    else
+        print("God Mode Disabled")
+        -- Add your code to disable god mode here
+    end
+end)
+
+MiscSection:NewSlider("Jump Power", "Adjust Jump Power", 300, 50, function(value)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = value
+end)
 
 -- Optimize for mobile support
 if game:GetService("UserInputService").TouchEnabled then
