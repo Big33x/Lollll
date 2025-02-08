@@ -13,25 +13,6 @@ local themeColors = {
 -- Create a new window and set its title and theme
 local window = DrRayLibrary:Load("FOG", "Default", themeColors)
 
--- Create the first tab
-local mainTab = window:NewTab("Main", "ImageIdHere")
-
--- Add elements to the first tab
-mainTab:NewLabel("Welcome to FOG UI")
-mainTab:NewButton("Click Me", "Prints Hello!", function()
-    print('Hello!')
-end)
-mainTab:NewToggle("Toggle", "Toggle! (prints the state)", true, function(toggleState)
-    if toggleState then
-        print("On")
-    else
-        print("Off")
-    end
-end)
-mainTab:NewInput("Input", "Prints your input.", function(text)
-    print("Entered text: " .. text)
-end)
-
 -- Create the Aimbot tab
 local aimbotTab = window:NewTab("Aimbot", "ImageIdHere")
 
@@ -64,16 +45,13 @@ espTab:NewToggle("Enable ESP", "Toggle ESP On/Off", false, function(state)
     espEnabled = state
     if espEnabled then
         print("ESP Enabled")
-        -- Add your ESP code here
+        -- Enable ESP code here
         enableESP()
     else
         print("ESP Disabled")
-        -- Add your code to disable ESP here
+        -- Disable ESP code here
         disableESP()
     end
-end)
-espTab:NewColorPicker("ESP Color", "Choose ESP Color", Color3.fromRGB(0, 255, 0), function(color)
-    print("ESP Color set to " .. tostring(color))
 end)
 
 local function enableESP()
@@ -156,6 +134,25 @@ miscTab:NewSlider("FOV", "Adjust Field of View", 120, 70, defaultFOV, function(v
     if fovEnabled then
         game.Workspace.CurrentCamera.FieldOfView = value
     end
+end)
+
+-- Create the first tab
+local mainTab = window:NewTab("Main", "ImageIdHere")
+
+-- Add elements to the first tab
+mainTab:NewLabel("Welcome to FOG UI")
+mainTab:NewButton("Click Me", "Prints Hello!", function()
+    print('Hello!')
+end)
+mainTab:NewToggle("Toggle", "Toggle! (prints the state)", true, function(toggleState)
+    if toggleState then
+        print("On")
+    else
+        print("Off")
+    end
+end)
+mainTab:NewInput("Input", "Prints your input.", function(text)
+    print("Entered text: " .. text)
 end)
 
 -- Button to open and close the UI
