@@ -56,6 +56,11 @@ KeyInputBox.Size = UDim2.new(0, 150, 0, 50)
 KeyInputBox.PlaceholderText = "Enter Key"
 KeyInputBox.Text = "" -- Clear any default text
 
+-- Add border to KeyInputBox
+local KeyInputBoxBorder = Instance.new("UICorner")
+KeyInputBoxBorder.CornerRadius = UDim.new(0, 5)
+KeyInputBoxBorder.Parent = KeyInputBox
+
 -- Configure the ConfirmButton
 ConfirmButton.Parent = ScreenGui
 ConfirmButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
@@ -64,6 +69,11 @@ ConfirmButton.Position = UDim2.new(0.5, -50, 0.55, -25)
 ConfirmButton.Size = UDim2.new(0, 100, 0, 50)
 ConfirmButton.Text = "Confirm"
 
+-- Add border to ConfirmButton
+local ConfirmButtonBorder = Instance.new("UICorner")
+ConfirmButtonBorder.CornerRadius = UDim.new(0, 5)
+ConfirmButtonBorder.Parent = ConfirmButton
+
 -- Configure the ESPButton
 ESPButton.Parent = Frame
 ESPButton.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
@@ -71,6 +81,11 @@ ESPButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 ESPButton.Position = UDim2.new(0.5, -50, 0.7, -25)
 ESPButton.Size = UDim2.new(0, 100, 0, 50)
 ESPButton.Text = "Enable ESP"
+
+-- Add border to ESPButton
+local ESPButtonBorder = Instance.new("UICorner")
+ESPButtonBorder.CornerRadius = UDim.new(0, 5)
+ESPButtonBorder.Parent = ESPButton
 
 -- Toggle UI visibility
 local function toggleUI()
