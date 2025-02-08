@@ -2,204 +2,56 @@
 local TweenService = game:GetService("TweenService")
 local UIS = game:GetService("UserInputService")
 
--- Key System
-local accessKey = "TEST123" -- Change this to your desired key
-local hasAccess = false
-
--- Function to check the key
-local function checkKey(inputKey)
-    if inputKey == accessKey then
-        hasAccess = true
-        print("Access Granted")
-        KeyFrame.Visible = false
-        MainFrame.Visible = true
-    else
-        print("Access Denied")
-    end
-end
-
 -- Create UI elements
 local ScreenGui = Instance.new("ScreenGui")
-local KeyFrame = Instance.new("Frame")
 local MainFrame = Instance.new("Frame")
-local KeyInputBox = Instance.new("TextBox")
-local ConfirmButton = Instance.new("TextButton")
 local ToggleButton = Instance.new("TextButton")
-local ESPButton = Instance.new("TextButton")
+local HeaderLabel = Instance.new("TextLabel")
 
 -- Configure the ScreenGui
 ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 ScreenGui.ResetOnSpawn = false
 
--- Configure the KeyFrame (for key input)
-KeyFrame.Parent = ScreenGui
-KeyFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-KeyFrame.Position = UDim2.new(0.5, -100, 0.5, -50)
-KeyFrame.Size = UDim2.new(0, 200, 0, 100)
-KeyFrame.AnchorPoint = Vector2.new(0.5, 0.5)
-
 -- Configure the MainFrame (main UI)
 MainFrame.Parent = ScreenGui
-MainFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+MainFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 255) -- Blue background
 MainFrame.Position = UDim2.new(0.5, -100, 0.5, -100)
 MainFrame.Size = UDim2.new(0, 200, 0, 200)
-MainFrame.Visible = false -- Initially hidden
 MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+MainFrame.Visible = true -- Initially visible
+MainFrame.Active = true
+MainFrame.Draggable = true
 
--- Configure the KeyInputBox
-KeyInputBox.Parent = KeyFrame
-KeyInputBox.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-KeyInputBox.TextColor3 = Color3.fromRGB(255, 255, 255)
-KeyInputBox.Position = UDim2.new(0.5, -75, 0.2, -25)
-KeyInputBox.Size = UDim2.new(0, 150, 0, 50)
-KeyInputBox.PlaceholderText = "Enter Key"
-KeyInputBox.Text = "" -- Clear any default text
-
--- Add border to KeyInputBox
-local KeyInputBoxBorder = Instance.new("UICorner")
-KeyInputBoxBorder.CornerRadius = UDim.new(0, 5)
-KeyInputBoxBorder.Parent = KeyInputBox
-
--- Add label to KeyInputBox
-local KeyInputBoxLabel = Instance.new("TextLabel")
-KeyInputBoxLabel.Parent = KeyInputBox
-KeyInputBoxLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-KeyInputBoxLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-KeyInputBoxLabel.Size = UDim2.new(1, 0, 0.3, 0)
-KeyInputBoxLabel.Position = UDim2.new(0, 0, -0.5, 0)
-KeyInputBoxLabel.Text = "Enter Key Here"
-KeyInputBoxLabel.TextScaled = true
-KeyInputBoxLabel.BorderSizePixel = 0
-
--- Configure the ConfirmButton
-ConfirmButton.Parent = KeyFrame
-ConfirmButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-ConfirmButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-ConfirmButton.Position = UDim2.new(0.5, -50, 0.6, -25)
-ConfirmButton.Size = UDim2.new(0, 100, 0, 50)
-ConfirmButton.Text = "Confirm"
-
--- Add border to ConfirmButton
-local ConfirmButtonBorder = Instance.new("UICorner")
-ConfirmButtonBorder.CornerRadius = UDim.new(0, 5)
-ConfirmButtonBorder.Parent = ConfirmButton
+-- Configure the HeaderLabel
+HeaderLabel.Parent = MainFrame
+HeaderLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
+HeaderLabel.TextColor3 = Color3.fromRGB(255, 255, 255) -- White text
+HeaderLabel.Position = UDim2.new(0.5, -50, 0, 10)
+HeaderLabel.Size = UDim2.new(0, 100, 0, 50)
+HeaderLabel.Text = "FOG"
+HeaderLabel.TextScaled = true
 
 -- Configure the ToggleButton
 ToggleButton.Parent = MainFrame
-ToggleButton.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
-ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-ToggleButton.Position = UDim2.new(0.5, -50, 0.3, -25)
+ToggleButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255) -- White background
+ToggleButton.TextColor3 = Color3.fromRGB(0, 0, 255) -- Blue text
+ToggleButton.Position = UDim2.new(0.5, -50, 0.8, -25) 
 ToggleButton.Size = UDim2.new(0, 100, 0, 50)
 ToggleButton.Text = "Toggle UI"
-ToggleButton.Draggable = true
-
--- Configure the ESPButton
-ESPButton.Parent = MainFrame
-ESPButton.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
-ESPButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-ESPButton.Position = UDim2.new(0.5, -50, 0.7, -25)
-ESPButton.Size = UDim2.new(0, 100, 0, 50)
-ESPButton.Text = "Enable ESP"
-
--- Add border to ESPButton
-local ESPButtonBorder = Instance.new("UICorner")
-ESPButtonBorder.CornerRadius = UDim.new(0, 5)
-ESPButtonBorder.Parent = ESPButton
+ToggleButton.TextScaled = true
 
 -- Toggle UI visibility
 local function toggleUI()
-    if hasAccess then
-        MainFrame.Visible = not MainFrame.Visible
-    else
-        print("Access required to toggle UI")
-    end
+    MainFrame.Visible = not MainFrame.Visible
 end
 
--- Toggle ESP feature
-local espEnabled = false
-
-local function toggleESP()
-    if hasAccess then
-        espEnabled = not espEnabled
-        if espEnabled then
-            ESPButton.Text = "Disable ESP"
-            print("ESP Enabled")
-            -- Add your ESP code here
-        else
-            ESPButton.Text = "Enable ESP"
-            print("ESP Disabled")
-            -- Add your code to disable ESP here
-        end
-    else
-        print("Access required to toggle ESP")
-    end
-end
-
--- Add functionality to the buttons
+-- Add functionality to the toggle button
 ToggleButton.MouseButton1Click:Connect(toggleUI)
-ESPButton.MouseButton1Click:Connect(toggleESP)
-ConfirmButton.MouseButton1Click:Connect(function()
-    checkKey(KeyInputBox.Text)
-end)
 
--- ESP Feature
-local LocalPlayer = game:GetService("Players").LocalPlayer
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Workspace = game:GetService("Workspace")
-local Camera = Workspace.CurrentCamera
-local WorldToViewportPoint = Camera.WorldToViewportPoint
-local RunService = game:GetService("RunService")
-
-local Classes = {
-    ["PlayerClient"] = {},
-    ["Character"] = {},
-    ["BowClient"] = {},
-    ["Camera"] = {},
-    ["RangedWeaponClient"] = {},
-    ["GetEquippedItem"] = {},
-    ["FPS"] = {},
-}
-
-for _, v in pairs(getgc(true)) do
-    if typeof(v) == "function" and islclosure(v) then
-        local info = debug.getinfo(v)
-        local name = string.match(info.short_src, "%.([%w_]+)$")
-        if name and Classes[name] and info.name ~= nil then
-            Classes[name][info.name] = info.func
-        end
-    end
+-- Optimize for mobile support
+if UIS.TouchEnabled then
+    ToggleButton.Size = UDim2.new(0, 150, 0, 50) -- Increase size for mobile
+    HeaderLabel.Size = UDim2.new(0, 150, 0, 50) -- Increase size for mobile
 end
 
-local Players = debug.getupvalue(Classes.PlayerClient.updatePlayers, 1)
-local cache = {}
-local HasEsp = {}
-
-local function updateESP()
-    if not espEnabled then return end
-    for _, player in pairs(Players) do
-        if player ~= LocalPlayer and player.Character and player.Character:FindFirstChild("Head") then
-            local head = player.Character.Head
-            local pos, onScreen = WorldToViewportPoint(Camera, head.Position)
-            if onScreen then
-                if not HasEsp[player.Character] then
-                    local box = Drawing.new("Square")
-                    box.Visible = true
-                    box.Color = Color3.new(0, 0, 255)
-                    box.Thickness = 2
-                    box.Transparency = 1
-                    HasEsp[player.Character] = box
-                end
-                local box = HasEsp[player.Character]
-                box.Size = Vector2.new(40, 40)
-                box.Position = Vector2.new(pos.X - 20, pos.Y - 20)
-            else
-                if HasEsp[player.Character] then
-                    HasEsp[player.Character].Visible = false
-                    HasEsp[player.Character] = nil
-                end
-            end
-        end
-    end
-end
-
-RunService.RenderStepped:Connect(updateESP)
+return ScreenGui
