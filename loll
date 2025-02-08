@@ -4,7 +4,7 @@ local UIS = game:GetService("UserInputService")
 
 -- Key System
 local accessKey = "TEST123" -- Change this to your desired key
-local hasAccess = true
+local hasAccess = false
 
 -- Function to check the key
 local function checkKey(inputKey)
@@ -22,9 +22,9 @@ end
 local ScreenGui = Instance.new("ScreenGui")
 local KeyFrame = Instance.new("Frame")
 local MainFrame = Instance.new("Frame")
-local ToggleButton = Instance.new("TextButton")
 local KeyInputBox = Instance.new("TextBox")
 local ConfirmButton = Instance.new("TextButton")
+local ToggleButton = Instance.new("TextButton")
 local ESPButton = Instance.new("TextButton")
 
 -- Configure the ScreenGui
@@ -45,15 +45,6 @@ MainFrame.Position = UDim2.new(0.5, -100, 0.5, -100)
 MainFrame.Size = UDim2.new(0, 200, 0, 200)
 MainFrame.Visible = false -- Initially hidden
 MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
-
--- Configure the ToggleButton
-ToggleButton.Parent = MainFrame
-ToggleButton.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
-ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-ToggleButton.Position = UDim2.new(0.5, -50, 0.3, -25)
-ToggleButton.Size = UDim2.new(0, 100, 0, 50)
-ToggleButton.Text = "Toggle UI"
-ToggleButton.Draggable = true
 
 -- Configure the KeyInputBox
 KeyInputBox.Parent = KeyFrame
@@ -92,6 +83,15 @@ ConfirmButton.Text = "Confirm"
 local ConfirmButtonBorder = Instance.new("UICorner")
 ConfirmButtonBorder.CornerRadius = UDim.new(0, 5)
 ConfirmButtonBorder.Parent = ConfirmButton
+
+-- Configure the ToggleButton
+ToggleButton.Parent = MainFrame
+ToggleButton.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
+ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleButton.Position = UDim2.new(0.5, -50, 0.3, -25)
+ToggleButton.Size = UDim2.new(0, 100, 0, 50)
+ToggleButton.Text = "Toggle UI"
+ToggleButton.Draggable = true
 
 -- Configure the ESPButton
 ESPButton.Parent = MainFrame
