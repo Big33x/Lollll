@@ -9,9 +9,7 @@ local trident = {
         tcp = nil,
     }
 
-local Workspace = cloneref(game:GetService("Workspace"))
 local RunService = cloneref(game:GetService("RunService"))
-local Camera = Workspace.CurrentCamera
 
 
 local FOVCircle = Drawing.new("Circle")
@@ -33,7 +31,7 @@ FOVCircle.Radius = 80
 local snap_line_outer = Drawing.new("Line")
 snap_line_outer.Visible = false
 snap_line_outer.Color = Color3.fromRGB(0, 0, 0)
-snap_line_outer.Thickness = 3
+snap_line_outer.Thickness = 1
 
 
 local snap_line_inner = Drawing.new("Line")
@@ -41,6 +39,11 @@ snap_line_inner.Visible = false
 snap_line_inner.Color = Color3.fromRGB(255, 255, 255)
 snap_line_inner.Thickness = 1
 
+
+local Decode = game.Workspace
+local PlayerListCache = {}
+local lastupdated = 0
+local snaplineTarget = nil
 
 local Settings = {
     ["Combat"] = {
