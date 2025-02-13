@@ -1,22 +1,44 @@
 local Workspace = cloneref(game:GetService("Workspace"))
 local RunService = cloneref(game:GetService("RunService"))
 local Camera = Workspace.CurrentCamera
+local Camera = game.Workspace.CurrentCamera
 
-
+-- Outer FOV Circle
 local fov_circle_outer = Drawing.new("Circle")
 fov_circle_outer.Visible = true
 fov_circle_outer.Thickness = 3
-fov_circle_outer.Color = Color3.fromRGB(0, 0, 0)
+fov_circle_outer.Color = Color3.fromRGB(0, 0, 255) -- Changed color to blue for better visibility
 fov_circle_outer.Position = Camera.ViewportSize / 2
-fov_circle_outer.Radius = 121
+fov_circle_outer.Radius = 100 -- Adjusted radius
 
-
+-- Inner FOV Circle
 local fov_circle_inner = Drawing.new("Circle")
 fov_circle_inner.Visible = true
-fov_circle_inner.Thickness = 1
-fov_circle_inner.Color = Color3.fromRGB(255, 255, 255)
+fov_circle_inner.Thickness = 2 -- Increased thickness for better visibility
+fov_circle_inner.Color = Color3.fromRGB(255, 0, 0) -- Changed color to red for better visibility
 fov_circle_inner.Position = Camera.ViewportSize / 2
-fov_circle_inner.Radius = 120
+fov_circle_inner.Radius = 90 -- Adjusted radius
+
+-- Function to update circle positions dynamically
+local function updateFOVCircles()
+    local viewportSize = Camera.ViewportSize
+    fov_circle_outer.Position = Vector2.new(viewportSize.X / 2, viewportSize.Y / 2)
+    fov_circle_inner.Position = Vector2.new(viewportSize.X / 2, viewportSize.Y / 2)
+end
+
+-- Connect update function to RenderStepped for dynamic updates
+game:GetService("RunService").RenderStepped:Connect(updateFOVCircles)
+
+-- Smooth Aiming Function (example)
+local function smoothAim(targetPosition)
+    local currentPosition = Camera.CFrame.Position
+    local smoothFactor = 0.1 -- Adjust this value for smoother aiming
+    local newPosition = currentPosition:Lerp(actualtargetPosition, smoothFactor)
+    Camera.CFrame = CFrame.new(newPosition)
+end
+
+-- Example usage of smoothAim (replace targetPosition with actual target)
+-- smoothAim(Vector3.new(0, 0, 0)) -- Replace with actual target position
 
 
 local snap_line_outer = Drawing.new("Line")
