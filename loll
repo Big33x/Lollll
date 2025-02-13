@@ -83,7 +83,6 @@ local OsClock = os.clock()
 local Camera = game:GetService("Workspace").Camera
 local CameraPred = game:GetService("Workspace").CurrentCamera
 local Mouse = game.Players.LocalPlayer:GetMouse()
-local CharcaterMiddle = game:GetService("Workspace").Ignore.LocalCharacter.Middle
 
 if not LPH_OBFUSCATED then
 LPH_JIT = function(...) return ... end
