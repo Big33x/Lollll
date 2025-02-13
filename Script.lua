@@ -57,7 +57,7 @@ getgenv().whitelisted = true
                             end
                         --- dont mess with above ---
 ]]
-                            loadstring(game:HttpGet("https://raw.githubusercontent.com/SWIMHUBISWIMMING/cracked/refs/heads/main/surge.gg/assets/drawing"))()
+                            loadstring(game:HttpGet("https://raw.githubusercontent.com/Big33x/Surge.gg/refs/heads/main/assets/drawing"))()
 
 local function getCustomAsset(path)
     if not isfile(path) then
