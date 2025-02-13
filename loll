@@ -1,3 +1,14 @@
+local trident = {
+    loaded = false,
+    gc = {
+        isgrounded = nill,
+        camera = nil,
+    },
+        lastpos = nil,
+        middlepart = nil,
+        tcp = nil,
+    }
+
 local Workspace = cloneref(game:GetService("Workspace"))
 local RunService = cloneref(game:GetService("RunService"))
 local Camera = Workspace.CurrentCamera
