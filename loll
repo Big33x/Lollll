@@ -74,7 +74,6 @@ local camera = game:GetService("Workspace").Camera;
 local Camera = game:GetService("Workspace").Camera
 local Camera = game:GetService("Workspace").CurrentCamera
 local Cam = game:GetService("Workspace").Camera
-local CharcaterMiddle = game:GetService("Workspace").Ignore.LocalCharacter.Middle
 local Mouse = game.Players.LocalPlayer:GetMouse()
 local lighting = game:GetService("Lighting")
 local SoundService = game:GetService("SoundService")
