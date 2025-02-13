@@ -22,12 +22,12 @@ FOVCircle.Position = Vector2.new(Camera.Viewportsize.X/2,Camera.V
 FOVCircle.Radius = 80
 
 
-local fov_circle_inner = Drawing.new("Circle")
-fov_circle_inner.Visible = true
-fov_circle_inner.Thickness = 1
-fov_circle_inner.Color = Color3.fromRGB(255, 255, 255)
-fov_circle_inner.Position = Vector2.new(Camera.Viewportsize.X/2,Camera.V
-fov_circle_inner.Radius = 80
+local FOVCircle = Drawing.new("Circle")
+FOVCircle.Visible = true
+FOVCircle.Thickness = 1
+FOVCircle.Color = Color3.fromRGB(255, 255, 255)
+FOVCircle.Position = Vector2.new(Camera.Viewportsize.X/2,Camera.V
+FOVCircle.Radius = 80
 
 
 local snap_line_outer = Drawing.new("Line")
@@ -49,7 +49,7 @@ local Settings = {
             ["Mode"]       = "None",
             ["Target"]     = "None",
             ["Enabled2"]   = true,
-            ["Fov Size"]   = 130,
+            ["Fov Size"]   = 80,
             ["Resover"]    = true,
         }
         
@@ -61,6 +61,15 @@ function to_viewport(pos)
     return Vector2.new(point.X, point.Y), on
 end
 
+Config = {
+    Manipulation = {
+        Enable = true,
+        Angles = 30,
+        Radius = 6,
+        Direction = "NORMAL",
+        Vector = Vector3.new(0, ,0 0)
+    },
+}
 
 local Classes = {
     ["PlayerClient"] = {},
