@@ -1,5 +1,3 @@
--- [[ Drawing Library ]] --
-
 local textService = cloneref(game:GetService("TextService"));
 
 local drawing = {
