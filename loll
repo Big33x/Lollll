@@ -3,20 +3,20 @@ local RunService = cloneref(game:GetService("RunService"))
 local Camera = Workspace.CurrentCamera
 
 
-local fov_circle_outer = Drawing.new("Circle")
-fov_circle_outer.Visible = true
-fov_circle_outer.Thickness = 3
-fov_circle_outer.Color = Color3.fromRGB(0, 0, 0)
-fov_circle_outer.Position = Camera.ViewportSize / 2
-fov_circle_outer.Radius = 121
+local FOVCircle = Drawing.new("Circle")
+FOVCircle.Visible = true
+FOVCircle.Thickness = 1
+FOVCircle.Color = Color3.fromRGB(45, 116, 202)
+FOVCircle.Position = Vector2.new(Camera.Viewportsize.X/2,Camera.V
+FOVCircle.Radius = 80
 
 
 local fov_circle_inner = Drawing.new("Circle")
 fov_circle_inner.Visible = true
 fov_circle_inner.Thickness = 1
 fov_circle_inner.Color = Color3.fromRGB(255, 255, 255)
-fov_circle_inner.Position = Camera.ViewportSize / 2
-fov_circle_inner.Radius = 120
+fov_circle_inner.Position = Vector2.new(Camera.Viewportsize.X/2,Camera.V
+fov_circle_inner.Radius = 80
 
 
 local snap_line_outer = Drawing.new("Line")
